@@ -132,7 +132,7 @@
 </div>
 <script type=text/javascript>
   var waveStretcher = 1;
-  var waveMultiplier = 50;
+  var waveMultiplier = 75;
   var i = 0;
   var msg = '';
 
@@ -150,7 +150,7 @@
     msg += '<span style="font-size:' + 100 + 'px;">&#9729;</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'; //+ get_spaces();
     msg += '<span style="font-size:' + 400 + 'px;">&#9729;</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'; //+ get_spaces();
     msg += '<span style="font-size:' + 50 + 'px;">&#9729;</span>&nbsp;'; //+ get_spaces();
-    msg += '<span style="font-size:' + 300 + 'px; color:#fff82e; top:-100px; position:relative;">&#9728;&nbsp;</span>';
+    msg += '<span style="font-size:' + 300 + 'px; color:#fff82e; top:-600px; left:-600px; position:relative;">&#9728;&nbsp;</span>';
     document.getElementById("message").innerHTML = msg.toString();
   }
 
@@ -159,10 +159,10 @@
       var bird = document.getElementById("island");
       //var offset = parseInt(Math.cos(i / 50) * 500); 
       var offset = 0;
-      var ypos = parseInt(Math.sin(i / waveStretcher) * waveMultiplier);
+      var ypos = parseInt(Math.sin(i / waveStretcher) * waveMultiplier) + 170;
       var xpos = parseInt(Math.cos(i / waveStretcher) * waveMultiplier); 
       bird.style.top = (ypos + (Math.random() * 50)) + "px";
-      bird.style.left = offset + ((xpos + 200) + Math.random() * 100)+ "px";
+      bird.style.left = offset + ((xpos + 100) + Math.random() * 100)+ "px";
     }
 
   window.onload = function () {
