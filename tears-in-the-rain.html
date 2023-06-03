@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>1 / f</title>
+<script src="./js/processing.min.js"></script>
+<style>
+	body {
+		background-color: #d80a97;
+		overflow: hidden;
+		padding:0px;
+		margin:0px;
+	}
+	#processing {
+		position: absolute;
+		top:200px;
+		left:200px;
+		border:2px;
+		border-style:solid;
+		border-color:#fff;
+	}
+	#water {
+		background-color: #000;
+		z-index: 2px;
+	}
+	.segment {
+		background-color: #ff31e9;
+		position: absolute;
+		z-index:1px;
+	}
+</style>
+<script type='text/javascript'>
+</script>
+</head>
+<body>
+	
+<script type='text/javascript'>
+	
+	var drops = 500;
+	var flood_level = window.innerHeight;
+	
+	function dispose_drop(id) {
+		var div = document.getElementById(id)
+		document.body.removeChild(div);
+		setTimeout(make_drop, 10 + Math.random() * 200, id)
+	}
+	
+	function make_drop(id) {
+		var x_pos = Math.random() * window.innerWidth;
+		var y_pos = Math.random() * window.innerHeight;
+		var div = document.createElement("div");
+		div.style.width = 1 * Math.random() * 4 + "px";
+		div.style.height = 1 + (Math.random() * 30) + "px";
+		div.setAttribute('class', 'segment');
+		div.setAttribute('id', id);
+		div.style.left = x_pos + "px";
+		div.style.top = y_pos + "px";
+		document.body.appendChild(div);
+		setTimeout(dispose_drop, 10 + Math.random() * 50, id);
+	}
+	
+	function init_rain() {
+		for (var i = 0; i < drops; i++) {
+			make_drop("segment_" + i);
+		}
+	}
+	
+	function flood() {
+		flood_level--;
+		var water = document.getElementById("water");
+		water.style.height = flood_level + "px";
+		water.style.top = (window.innerHeight - flood_level) + "px";
+	}
+	
+	var div = document.createElement("div");
+	div.style.width = window.innerWidth + "px";
+	div.style.height = "0px";
+	div.style.top = window.innerHeight + "px";
+	div.style.left = "0px";
+	div.setAttribute('id', "water");
+	document.body.appendChild(div);
+	
+	init_rain();
+	setInterval(flood, 200);
+</script>	
+
+<script type="application/processing">
+// globals
+int[][] rules = {    {0, 0, 0, 0},
+                     {0, 0, 1, 1},
+                     {0, 1, 0, 0},
+                     {0, 1, 1, 1},  
+                     {1, 0, 0, 1},
+                     {1, 0, 1, 0},
+                     {1, 1, 0, 1},
+                     {1, 1, 1, 0}   };
+int cell_size = 10;
+ArrayList cells;
+
+void setup() {
+/*
+  size( $(window).width(), 100 );
+*/
+  size(600, 400); 
+  background(255);
+  noStroke();
+  
+  // fill an array of cells
+  cells = new ArrayList();
+  for (int i=0; i < (width / cell_size); i++) {   
+    for (int j = 0; j < (height / cell_size); j++) {
+      float x = i * cell_size;
+      float y = j * cell_size;
+      if (x == i * cell_size) {      // if (x == (width / 2) && y == (height / 2) {
+        cells.add(new Cell(x, y, 0));
+      }
+      cells.add(new Cell(x, y, 1));
+    }
+  }
+}
+
+void draw() {
+  for (int c = 1; c < (cells.size() - 1); c++) {
+    Cell left = (Cell) cells.get(c - 1);
+    Cell middle = (Cell) cells.get(c);
+    Cell right = (Cell) cells.get(c + 1);
+    
+    int state = checkrules(left.getState(), 
+                          middle.getState(), 
+                          right.getState());
+    middle.update(state);
+  }
+}
+
+int checkrules(int c1, int c2, int c3) {
+  for (int r = 0; r < rules.length; r++) {
+      if (c1 == rules[r][0] && 
+          c2 == rules[r][1] && 
+          c3 == rules[r][2]) {
+          return rules[r][3];
+      }
+  }
+  return 0;
+}
+
+class Cell { 
+  int curstate = 0;
+  float xpos, ypos = 0;
+  float c = 0;
+  Cell (float x, float y, int f) {
+    xpos = x;
+    ypos = y;
+    update(f);
+  } 
+  
+  void update(int f) {
+    curstate = f;
+    c -= 0.1;
+    if (f == 0) {
+      fill(random(255)-c, c, random(255));
+      float t = noise(c) * (cell_size * 2);
+      rect(xpos, ypos, t, t);
+      //rect(xpos, ypos, cell_size, cell_size);
+    }
+    else {
+      fill(random(255), 255, random(255));
+      rect(xpos, ypos, cell_size, cell_size);
+    }
+  } 
+  
+  int getState() {
+    return curstate;
+  }
+}
+</script>
+<canvas id='processing' width="100%" height="100%"></canvas>
+</body>
+</html>

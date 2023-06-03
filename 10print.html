@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>1 / f</title>
+<script src="./js/processing.min.js"></script>
+<style>
+  body {
+    background-color: #000;
+    overflow: hidden;
+    padding:0px;
+    margin:0px;
+  }
+  #processing {
+    width:100%;
+    height:100%;
+  }
+</style>
+</head>
+<body>
+
+<script type="application/processing">
+int grid_spacing = 15;
+float sweight = 1;
+color[] colarray = { color(151, 241, 50), color(129, 209, 43), color(148, 215, 76), color(120, 212, 22) };
+
+void setup() {
+  background(color(colarray[(int)random(0,3)]))
+  size(screen.width, screen.height);
+  stroke(0);
+  strokeWeight(sweight);
+  //noLoop();
+}
+
+void draw() {  
+  background(color(colarray[(int)random(0,3)]))
+  strokeWeight(1);
+  do10print();
+}
+
+void do10print() {
+  for (int i = 0; i < (width / 10); i++) {
+    for (int j = 0; j < (height / 10); j++) { 
+      int choice = int(random(2));
+      
+      // add weight to the choice selected for greater probability of line direction
+      float probability = random(2);
+      
+      if (probability >= 0.1) {
+          choice = 0;
+      }
+      else {
+        choice = 1; 
+      }
+      
+      int xspacing = int(i * grid_spacing);
+      int yspacing = int(j * grid_spacing);
+      if (choice == 0) {  
+        //strokeWeight(1;
+        line(xspacing, yspacing, xspacing + grid_spacing, yspacing + grid_spacing);  // make '\'
+
+        // uncomment to get more elaborate effects
+        //fill(random(255), random(255), random(255));
+        //ellipse(xspacing, yspacing, grid_spacing / 2, grid_spacing / 2);
+        //fill(255);
+        //rect(xspacing, yspacing, grid_spacing / 2, grid_spacing / 2);
+        //draw_rand_line(xspacing, yspacing, 0, sweight);
+      }
+      else {               
+        strokeWeight(sweight*2);
+        line(xspacing + grid_spacing, yspacing, xspacing, yspacing + grid_spacing);  // make '/'
+        
+        // uncomment below to get more elaborate effects
+        /*
+        if (i % 2 == 0)
+          fill(70,196,255);
+        else
+          fill(255);
+        ellipse(xspacing + grid_spacing, yspacing, grid_spacing, grid_spacing);
+        */
+        //fill(0);
+        //ellipse(xspacing + grid_spacing, yspacing, grid_spacing, grid_spacing);
+        //rect(xspacing + grid_spacing, yspacing, grid_spacing * 2, grid_spacing * 2);
+        //draw_rand_line(xspacing, yspacing, 0, sweight);
+      }
+    }
+  }
+}
+
+void draw_rand_line(int xpos, int ypos, float str, float weight) {
+  int dir = int(random(60));
+  int midx = xpos + (grid_spacing / 2) * 9;
+  int midy = ypos + (grid_spacing / 2);
+  
+  stroke(str);
+  strokeWeight(weight);
+  
+  if (dir == 3) {
+    line(midx, midy, midx - (grid_spacing * 2), midy); // goes left
+  }
+  if (dir == 2) {
+    line(midx, midy, midx + (grid_spacing * 2), midy); // goes right
+  }  
+  if (dir == 1) {
+    line(midx, midy, midx, midy - (grid_spacing * 2)); // goes up
+  }
+  if (dir == 0) {
+    line(midx, midy, midx, midy + (grid_spacing * 2)); // goes down
+  }  
+}
+
+</script>
+<canvas id='processing' width="100%" height="100%"></canvas>
+</body>
+</html>

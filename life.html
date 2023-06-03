@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>1 / f</title>
+<script src="./js/processing.min.js"></script>
+<style>
+  body {
+    background-color: #000;
+    overflow: hidden;
+    padding:0px;
+    margin:0px;
+  }
+  #processing {
+    width:100%;
+    height:100%;
+  }
+</style>
+</head>
+<body>
+
+<script type="application/processing">
+/*
+
+  Death
+    If an occupied cell has 0, 1, 4, 5, 6, 7, or 8 occupied neighbors, 
+    the organism dies (0, 1: of loneliness; 4 thru 8: of overcrowding).
+    
+  Survival
+    If an occupied cell has two or three neighbors, 
+    the organism survives to the next generation.
+    
+  Birth
+    If an unoccupied cell has three occupied neighbors, 
+    it becomes occupied.
+  
+*/
+
+int cell_size = 10;
+int rows, cols;
+int [][] o, n;
+
+void setup() {
+  
+  size(screen.width, screen.height);
+  background(255, 102, 219);
+  rows = height / cell_size;
+  cols = width / cell_size;
+  o = new int[cols][rows];
+  n = new int[cols][rows];
+  noStroke();
+  draw_board();
+}
+
+void draw() {
+  check_rules();
+  reinit_board();
+}
+
+void draw_board() {
+   // init the board with some random starting "alive" states
+  for (int i = 0; i < cols; i++) {   
+    for (int j = 0; j < rows; j++) {
+      if (random(1) > 0.6) {
+        o[i][j] = 1;
+        n[i][j] = 1;
+      }
+      else {
+        o[i][j] = 0;
+        n[i][j] = 0;
+      }
+    }
+  }
+}
+
+void check_rules() {
+  for (int x = 0; x < cols; x++) {
+    for (int y = 0; y < rows; y++) {
+      int c = 0;
+      //above row
+      if (o[(x + cols - 1) % cols ][(y + rows - 1) % rows ] == 1) c++;
+      if (o[x][(y + rows - 1) % rows] == 1) c++;
+      if (o[(x + 1) % cols ][(y + rows - 1) % rows] == 1) c++;
+      //middle row
+      if (o[(x + cols - 1) % cols][y] == 1) c++;
+      if (o[(x + 1) % cols ][y] == 1) c++; 
+      //bottom row
+      if (o[(x + cols - 1) % cols][(y+1) % rows] == 1) c++;
+      if (o[x][(y+1) % rows] == 1) c++;
+      if (o[(x+1) % cols ][(y+1) % rows] == 1) c++;
+      // apply rules
+      if ((o[x][y] == 1) && (c <  2)) { n[x][y] = 0; }   
+      else if ((o[x][y] == 1) && (c >  3)) { n[x][y] = 0; }    
+      else if ((o[x][y] == 0) && (c == 3)) { n[x][y] = 1; }    
+      else { n[x][y] = o[x][y]; }
+    }
+  }
+  int[][] tmp = o;
+  o = n;
+  n = tmp;  
+}
+
+void reinit_board() {
+  background(255, 102, 219);
+  for (int i = 0; i < cols; i++) {
+    for (int j = 0; j < rows; j++) {
+      if ((n[i][j] == 1)) {
+        fill(61, 4, 48);
+        ellipse(i * cell_size, j * cell_size, cell_size, cell_size);
+      }
+      else {
+        stroke(255);
+        noFill();
+        rect(i * cell_size, j * cell_size, cell_size, cell_size);
+        noStroke();
+        fill(255, 102, 219);
+        ellipse(i * cell_size, j * cell_size, cell_size / 4, cell_size / 4);
+      }
+    }
+  }
+}
+
+</script>
+<canvas id='processing' width="100%" height="100%"></canvas>
+</body>
+</html>

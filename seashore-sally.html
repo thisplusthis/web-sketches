@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>1 / f</title>
+<script src="./js/processing.min.js"></script>
+<style>
+  body {
+    background-color: #000;
+    overflow: hidden;
+    padding: 0px;
+    margin: 0px;
+    font-size: 30px;
+    font-family: Helvetica;
+    color: #6d95de;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  #island {
+    position: absolute;
+    z-index:100;
+    top:50px;
+    right:100px;
+  }
+  #processing {
+    width:100%;
+    height:100%;
+  }
+  #bird {
+    position: relative;
+    top:0px;
+    left:0px;
+    display: block;
+  }
+  #message {
+    top:-50px;
+    right:0px;
+    width:100%;
+    height:100%;
+    margin-right: 5px;
+    position: absolute;
+    text-align: right;
+    letter-spacing: 50%;
+    z-index: 90;
+    overflow: visible;
+  }
+  #email-container {
+    position: absolute;
+    bottom:0px;
+    right:0px;
+    background-color: #DBEDFF;
+    width:75px;
+    height:30px;
+    border:2px solid #F12772;
+    z-index: 101;
+    font-size: 12px;
+    color: black;
+    text-align: center;
+  }
+
+  #email-container a {
+    text-decoration: none;
+    font-weight: bold;
+    color: #000028;
+    position: relative;
+    padding-top: 5px;
+    line-height: 28px;
+  }
+
+  #email-container a:hover {
+    text-decoration: underline;
+  }
+</style>
+</head>
+<body>
+
+<script type="application/processing">
+  int lines = screen.width;
+  float t1 = 300;      // perlin turbulence values per wave
+  float t2 = 0;
+  float t3 = 3;
+  float t4 = 200;
+  float t5 = 0;
+  float turbulence = 40;
+  //float increase = 0;
+
+  void draw() {
+  // increase += 0.1;
+  // turbulence = increase;
+    background(219,237,255);
+    for (int i = 0; i < lines; i++) {
+      int x = i;
+      t5 -= 0.019;
+      stroke(0,140,255);
+      line(i, (height - 299) + (noise(t5) * turbulence), i, height);
+      t4 -= 0.011;
+      stroke(25,52,255);
+      line(i, (height - 290) + (noise(t4) * (turbulence + 5)), i, height);
+      t3 -= 0.018;
+      stroke(8,0,155);
+      line(i, (height - 275) + (noise(t3) * (turbulence + 10)), i, height);
+      t2 -= 0.01;
+      stroke(0,0,80);
+      line(i, (height - 250) + (noise(t2) * (turbulence + 15)), i, height);
+      stroke(0,0,40);
+      t1 -= 0.009;
+      line(i, (height - 220) + (noise(t1) * (turbulence + 20)), i, height); 
+    } 
+  }
+  void setup() {
+    smooth();
+    size(screen.width, screen.height);
+    background(219, 237, 255);
+  }
+
+</script>
+<canvas id='processing' width="100%" height="100%"></canvas>
+<div id="message"></div>
+<div id="island"><img id="birdy" src="./img/bird.png"></div>
+<div class="hidden">
+  <script type="text/javascript">
+    <!--//--><![CDATA[//><!--
+      if (document.images) {
+        img = new Image();
+        img.src = "./images/bird.png";
+      }
+    //--><!]]>
+  </script>
+</div>
+<script type=text/javascript>
+  var waveStretcher = 1;
+  var waveMultiplier = 50;
+  var i = 0;
+  var msg = '';
+
+  function get_spaces() {
+    var spaces = Math.floor(Math.random() * 10);
+    var tmp = '';
+    for (var i = 0; i < spaces; i++) {
+      tmp += '&nbsp;'
+    }
+    return tmp;
+  }
+
+  function cloudy() {
+    var fsize = 20; //10 + Math.floor(Math.random() * 30);
+    msg += '<span style="font-size:' + 100 + 'px;">&#9729;</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'; //+ get_spaces();
+    msg += '<span style="font-size:' + 400 + 'px;">&#9729;</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'; //+ get_spaces();
+    msg += '<span style="font-size:' + 50 + 'px;">&#9729;</span>&nbsp;'; //+ get_spaces();
+    msg += '<span style="font-size:' + 300 + 'px; color:#fff82e; top:-100px; position:relative;">&#9728;&nbsp;</span>';
+    document.getElementById("message").innerHTML = msg.toString();
+  }
+
+  function init() {
+      i += 1;
+      var bird = document.getElementById("island");
+      //var offset = parseInt(Math.cos(i / 50) * 500); 
+      var offset = 0;
+      var ypos = parseInt(Math.sin(i / waveStretcher) * waveMultiplier);
+      var xpos = parseInt(Math.cos(i / waveStretcher) * waveMultiplier); 
+      bird.style.top = (ypos + (Math.random() * 50)) + "px";
+      bird.style.left = offset + ((xpos + 200) + Math.random() * 100)+ "px";
+    }
+
+  window.onload = function () {
+    setInterval(init, 100);
+    //setInterval(cloudy, 200 + (Math.floor(Math.random()) * 8000));
+    cloudy();
+  }
+</script>
+</body>
+</html>

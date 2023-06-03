@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>1 / f</title>
+<script src="./js/processing.min.js"></script>
+<style>
+  body {
+    background-color: #000;
+    overflow: hidden;
+    padding:0px;
+    margin:0px;
+  }
+  #processing {
+    width:100%;
+    height:100%;
+  }
+</style>
+</head>
+<body>
+
+<script type="application/processing">
+
+float angle = 45;
+float rectw = 5;
+float recth = 30;
+int spacing = 1;
+float base = 127;
+float index = 0.2;
+
+void setup() 
+{ 
+  size(screen.width, screen.height);
+  background(0);
+  stroke(0);
+  //noLoop();
+  smooth();
+}
+
+void draw() 
+{ 
+  for (int i = 0; i < 20; i++)
+  {
+     pushMatrix();
+     translate(random(width / 2), random(height / 2));
+     rotate(random(360));
+     strip();
+     spacing += (recth + 1);
+     popMatrix();
+  }
+}
+
+void strip()
+{
+  for (int i = 0; i < 200; i++){
+     rect((i * rectw), recth, 100, recth);
+     line(i,recth,i,rectw);
+  }
+}
+</script>
+<canvas id='processing' width="100%" height="100%"></canvas>
+</body>
+</html>

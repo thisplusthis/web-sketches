@@ -1,0 +1,110 @@
+<HTML>
+<HEAD>
+	
+<meta name="title" content="▄▓▒▀▒▀▀▒▒▀▓▄▀▄▒▐▄▒▐█▄▐" />
+<meta name="description" content="1 / f" />
+<link rel="image_src" href="./images/4.jpg" />
+<TITLE>1 / f</TITLE>
+
+<style>
+	body
+	{
+		font-family:			"Helvetica";
+		font-style:				bold;
+		letter-spacing: 		0px;
+		background-color: 		#0C1D28;
+		line-height:    		4px;
+		padding-top: 			0px;
+		padding-right: 			100px;
+		padding-bottom: 		50px;
+		padding-left: 			75px;
+		margin:					0px;
+		overflow:				hidden;
+	}
+
+	div.container
+	{
+		word-wrap: 				break-word;
+		position:				absolute;
+		border-style:			solid;
+		border-color:			#3586FF;
+		top: 					100px;
+		left: 					200px;
+		width:					700px;
+		height:					420px;
+		overflow:				hidden;
+	}
+</style>
+
+<SCRIPT LANGUAGE="JavaScript">
+	var chars = [ ];
+	var chars2 = [ ];
+	var chars3 = [ ];
+	var chars_array = [ ];
+	var next_pos = 0;
+
+	function init()
+	{
+		fill_arrays();
+		change_text();
+	}
+	
+	function fill_arrays()
+	{
+		for (var i = 9632; i < 9720; i++)
+			chars.push('&#'+i.toString()+';');
+			
+				for (var i = 9600; i < 9622; i++)
+					chars2.push('&#'+i.toString()+';');
+					
+							for (var i = 9472; i < 9580; i++)
+								chars3.push('&#'+i.toString()+';');
+		
+		chars.push(" ");
+		chars2.push(" ");
+		chars3.push(" ");	
+		chars_array.push(chars, chars2, chars3);
+	}
+
+	function change_text()
+	{
+		var len 		= 1000;
+		var new_title  	= choose_new_copy(len);
+		var main 		= document.getElementById("sucks").innerHTML 		= new_title;
+		setTimeout("change_text()", 10);
+	}
+
+	function choose_new_copy(len)
+	{
+		var title 		= "";
+		var color;
+		next_pos++;
+		
+		if (next_pos > len) 
+			next_pos = 0;
+		
+		var char_set = chars_array[Math.floor(Math.random() * chars_array.length)];
+		
+		for (var i = 0; i < len; i++)
+		{
+			var char = char_set[Math.floor(Math.random() * char_set.length)];
+			
+			if (i == next_pos || i == next_pos - 1 || i == next_pos + 1 || i == next_pos + 2 || i == next_pos - 2)
+				color 	= "#6EFF00";
+			else
+				color 	= "#CCCCCC";
+				
+			var fattributes = "<font size = " + Math.random() * 9 + " color = " + color + ">";
+			title 		+= fattributes + char + "</font>";
+		}
+		return title;
+	}
+</script>
+</HEAD>
+
+<body onload = "init()">
+	<div class = "container" id = "holder">
+	<h5 id="sucks"></h5>
+	</div>
+</body>
+</HTML>

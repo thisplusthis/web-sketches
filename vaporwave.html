@@ -1,0 +1,198 @@
+<HTML>
+<HEAD>
+<meta name="title" content="▒▔░▊▇▌▓▎▍▍▀▆▅░▒▂█▕█▉▔▌▍▄▕▆▒▓▏▒▍▋█" />
+<meta name="description" content="mushi mushi" />
+<link rel="image_src" href="http://www.slavetothis.com/images/knees.png" />
+<TITLE>1 / f</TITLE>
+<style>
+
+	body
+	{
+		background-color: #000000;
+	}
+	
+	h5
+	{
+		font-family:	"Arial";
+		font-style:		bold;
+		letter-spacing: -6px;
+		background-color: #F7277A;
+		line-height:    10px;
+		padding-top: 	0px;
+		padding-right: 	0px;
+		padding-bottom: 0px;
+		padding-left: 	0px;
+		margin:			0px;
+		overflow:		visible;
+	}
+	
+	h6
+	{
+		font-family:	"Courier";
+		color: 			#9000A1;
+		font-style:		bold;
+		letter-spacing: -6px;
+		line-height:    10px;
+		padding-top: 	0px;
+		padding-right: 	0px;
+		padding-bottom: 0px;
+		padding-left: 	0px;
+		margin:			0px;
+		overflow:		visible;
+	}
+	
+	h4
+	{
+		font-family:	"Verdana";
+		color: 			#9000A1;
+		font-style:		bold;
+		letter-spacing: -6px;
+		line-height:    10px;
+		padding-top: 	0px;
+		padding-right: 	0px;
+		padding-bottom: 0px;
+		padding-left: 	0px;
+		margin:			0px;
+		overflow:		visible;
+	}
+
+	div.container
+	{
+		word-wrap: 		break-word;
+		position:		absolute;
+		top: 			0px;
+		left: 			79px;
+		width:			400px;
+		height:			800px;
+		overflow:		hidden;
+	}
+	
+	div.container2
+	{
+		word-wrap: 		break-word;
+		position:		absolute;
+		top: 			40px;
+		left: 			200px;
+		width:			400px;
+		height:			800px;
+		overflow:		hidden;
+	}
+	
+	div.container3
+	{
+		word-wrap: 		break-word;
+		position:		absolute;
+		top: 			200px;
+		left: 			450px;
+		width:			700px;
+		height:			300px;
+		overflow:		hidden;
+	}
+	
+</style>
+
+<SCRIPT LANGUAGE="JavaScript">
+
+	var chars = [ ];
+	var chars2 = [ ];
+	var chars3 = [ ];
+	var chars_array = [ ];
+	
+	function init()
+	{
+		fill_array();
+		set_other_divs();
+		another();
+		change_text();
+	}
+	
+	function fill_array()
+	{
+		for (var i = 9632; i < 9720; i++)
+			chars.push('&#'+i.toString()+';');
+			
+				for (var i = 9600; i < 9622; i++)
+					chars2.push('&#'+i.toString()+';');
+					
+							for (var i = 9472; i < 9580; i++)
+								chars3.push('&#'+i.toString()+';');
+	
+		chars2.push(chars3);
+		chars_array.push(chars2);
+	}
+
+	function change_text()
+	{
+		var len 		= 100 + Math.random() * 800;
+		var new_title  	= choose_new_copy(len, false);
+		var main 		= document.getElementById("sucks").innerHTML 		= new_title;
+		var div 		= document.getElementById("holder");
+		div.style.top = Math.random() * 400;
+		setTimeout("change_text()", 1000);
+		setTimeout("set_other_divs()", 500);
+		setTimeout("another()", 1500);
+	}
+	
+	function set_other_divs()
+	{
+		var len			= 300;
+		var new_title  	= choose_new_copy(len, true);
+		var main 		= document.getElementById("dick").innerHTML 		= new_title;
+		var div 		= document.getElementById("holder2");
+		div.style.width = 400 + Math.random() * 400;
+	}
+	
+	function another()
+	{
+		var len2		= 100;
+		var t2			= choose_new_copy(len2, true);
+		var div2		= document.getElementById("allnight").innerHTML		= t2;
+	}
+
+	function choose_new_copy(len, manual)
+	{
+		var title = "";
+		var color = "#000000";
+		var f_size = "2";
+		
+		if (manual == true && len == 300)
+		{
+			color = "#14C6FC";
+			f_size = "10";
+		}	
+		else if (manual == true && len == 100)
+		{
+			color = "#E1FF00";
+			f_size = "5";
+		}
+			
+		
+		var char_set = chars_array[Math.floor(Math.random() * chars_array.length)];
+		
+		for (var i = 0; i < len; i++)
+		{
+			var char = char_set[Math.floor(Math.random() * char_set.length)];
+			var fattributes = "<font size = " + f_size + " color = " + color + ">";
+			title += fattributes + char + "</font>";
+		}
+		return title;
+	}
+
+</script>
+</HEAD>
+
+<body onload = "init()">
+	<div class = "container" id = "holder">
+		<h5 id="sucks"></h5>
+	</div>
+	
+	<div class = "container3" id = "holder3">
+		<h4 id="allnight"></h4>
+	</div>
+	
+	<div class = "container2" id = "holder2">
+		<h6 id="dick"></h6>
+	</div>
+	
+</body>
+</HTML>

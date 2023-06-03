@@ -1,0 +1,98 @@
+<HTML>
+<HEAD>
+<TITLE>1 / f</TITLE>
+<style>
+
+	body
+	{
+		background-color: #ffffff;
+		font-family:	"Verdana";
+		color: 			#333333;
+		font-style:		bold;
+		letter-spacing: -1px;
+		line-height:    1px;
+	}
+	
+	div.container {
+	    word-wrap: break-word;
+	}
+	
+	
+	h4
+	{
+		font-family:	"Verdana";
+		color: 			#333333;
+		font-style:		bold;
+		letter-spacing: -6px;
+		line-height:    1px;
+		padding-top: 	0px;
+		padding-right: 	0px;
+		padding-bottom: 0px;
+		padding-left: 	0px;
+		margin:			0px;
+		overflow:		visible;
+	}
+	
+</style>
+
+<SCRIPT LANGUAGE="JavaScript">
+
+	var chars = [ ];
+	var chars2 = [ ];
+	var chars3 = [ ];
+	var chars_array = [ ];
+	
+	function init()
+	{
+		fill_array();
+		change_text();
+	}
+	
+	function fill_array()
+	{
+		for (var i = 9617; i < 9619; i++)
+			chars.push('&#'+i.toString()+';');
+			
+			chars.push("&#9607;");
+			chars.push("&#9638;");
+			
+				for (var i = 9600; i < 9622; i++)
+					chars2.push('&#'+i.toString()+';');
+					
+							for (var i = 9472; i < 9580; i++)
+								chars3.push('&#'+i.toString()+';');
+		//chars.push("&#9678;");
+		chars2.push(chars3);
+		chars_array.push(chars);
+	}
+
+	function change_text()
+	{
+		var len 		= 2000;
+		var new_title  	= choose_new_copy(len, false);
+		var main 		= document.getElementById("baaa").innerHTML = new_title;
+		setTimeout(change_text,10);
+	}
+
+	function choose_new_copy(len, manual)
+	{
+		var title = "";
+		var color = "#000000";
+		var char_set = chars_array[Math.floor(Math.random() * chars_array.length)];
+		
+		for (var i = 0; i < len; i++)
+		{
+			var f_size = Math.ceil(Math.random() * 20).toString();
+			var char = char_set[Math.floor(Math.random() * char_set.length)];
+			var fattributes = "<font size='" + f_size + "'>";
+			title += fattributes + char + "</font>";
+		}
+		return title;
+	}
+
+</script>
+</HEAD>
+<body onload = "init()">
+<div class = "container" id = "baaa"></div>
+</body>
+</HTML>

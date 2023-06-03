@@ -1,0 +1,247 @@
+<HTML>
+<HEAD>
+<meta name="title" content="▄▓▒▀▒▀▀▒▒▀▓▄▀▄▒▐▄▒▐█▄▐" />
+<meta name="description" content="◯◥◯◥◯◥◯◥◯◥◯◥◯◥◯◯" />
+<link rel="image_src" href="./img/9.jpg" />
+<TITLE>1 / f</TITLE>
+<style>
+    ul
+    {
+        background:     url("./img/13.jpg") bottom;
+        width:          20px;
+        list-style:     none;
+        margin:         0;
+        position:       absolute;
+        z-index:        -1;
+        opacity:        0.5;
+    }  
+
+    ul.first
+    {
+        left:           75px;
+        top:            400px;
+        height:         100px;
+    }
+
+    ul.second
+    {
+        left:           175px;
+        top:            400px;
+        height:         10px;
+    }
+
+    ul.third
+    {
+        left:           275px;
+        top:            400px;
+        height:         200px;
+    }
+
+    ul.fourth
+    {
+        left:           375px;
+        top:            400px;
+        height:         800px;
+    }
+
+    ul.fifth
+    {
+        left:           475px;
+        top:            400px;
+        height:         190px;
+    }
+
+    ul.sixth
+    {
+        left:           5175px;
+        top:            400px;
+        height:         500px;
+    }
+
+    ul.seventh
+    {
+        left:           675px;
+        top:            400px;
+        height:         660px;
+    }
+
+    ul.eighth
+    {
+        left:           775px;
+        top:            400px;
+        height:         100px;
+    }
+
+    p.first
+    {
+        letter-spacing: 3px;
+        font-size:      9px;
+        position:       absolute;
+        left:           80px;
+        top:            140px;
+    }
+    
+    p.second
+    {
+        letter-spacing: 3px;
+        font-size:      9px;
+        position:       absolute;
+        left:           80px;
+        top:            145px;
+    }
+
+    body
+    {
+        font-family:    "Helvetica";
+        font-style:     bold;
+        letter-spacing: -10px;
+        background-color: #ffffff;
+        line-height:    30px;
+        padding-top:    90px;
+        padding-right:  100px;
+        padding-bottom: 50px;
+        padding-left:   75px;
+        margin:         0px;
+        overflow:       hidden;
+    }
+
+    div.container
+    {
+        word-wrap:      break-word;
+        position:       absolute;
+        top:            150px;
+        left:           75px;
+        width:          1000px;
+        height:         900px;
+        overflow:       hidden;
+    }
+</style>
+
+<script src = "./js/JSTweener.js"></script>
+<SCRIPT LANGUAGE="JavaScript">
+
+    var f = 0;
+    var num_of_lines = 20;
+
+    function choose_random_image() {
+        return "./images/" + (Math.random() * (17 - 1) + 1).toString() + ".jpg";
+    }
+
+    function init()
+    {
+        change_text();
+        draw_grid();
+    }
+
+
+    function change_text()
+    {
+        var len         = 100 + Math.ceil(Math.random() * 1400);
+        var new_title   = choose_new_copy(len);
+        var binary1     = document.getElementById("binary1").innerHTML      = '<p class = "first">' + get_binary_string() + '</p>';
+        var binary1     = document.getElementById("binary2").innerHTML      = '<p class = "second">' + get_binary_string() + '</p>';
+        var main        = document.getElementById("sucks").innerHTML        = new_title;
+        setTimeout("change_text()", 10 + Math.floor(Math.random() * 300));
+    }
+
+    function draw_grid()
+    {
+        var uls             = document.getElementsByTagName("ul");
+        if (uls.length > 0)
+        {
+            var left_start              = 0;
+            var top;
+            for (var i = 0; i < uls.length; i++)
+            {
+                var el                  = uls[i];
+                if (el != null) 
+                {
+                    left_start          += 130;
+                    var height          = 10 + Math.ceil(Math.random() * 900)
+                    el.style.top        = el.style.top - 100;
+                    el.style.height     = height;
+                    el.style.left       = left_start;
+                    el.backgroundImage  = choose_random_image();
+                    tween_bar(el);
+                }
+            }
+        }
+        //display_title();
+    }
+    
+    function display_title()
+    {
+        return;
+        f += .1;
+        document.title = Math.sin(f).toString();
+        setTimeout("display_title()", 100)
+    }
+    
+    function tween_bar(el)
+    {
+        var new_height = Math.floor(Math.random() * 1000);
+        JSTweener.addTween(el.style, 
+        {
+            time: 4 + Math.floor(Math.random() * 4),
+            transition: 'easeOutCubic',
+            onComplete: function() { tween_bar(el); },
+            height: new_height
+        });
+    }
+
+    function get_binary_string()
+    {
+        var tmp = "";
+        for (var i = 0; i < 65; i++)
+        {
+            var rand = Math.round(Math.random());
+            tmp += rand;
+            if (tmp.length == 8 || tmp.length == 16 || 
+                tmp.length == 24 || tmp.length == 32 || 
+                tmp.length == 40 || tmp.length == 48 || 
+                tmp.length == 56 || tmp.length == 64) 
+            tmp += "\n";
+        }
+        window.status = tmp;
+        return tmp;
+    }
+
+    function choose_new_copy(len)
+    {
+        var title = "";
+        for (var i = 0; i < len; i++)
+        {
+            var color;
+            var char = String.fromCharCode(50 + (Math.ceil(Math.random() * 100)));
+            if (char == "f" || char == "1" || 
+                char == "/" || char == "F") 
+                    color = "#61A0E4";
+            else 
+                    color = "#000000";
+            var fattributes = "<font id = 'format' size = " + Math.floor(Math.random() * 10) + " color = " + color + ">";
+            title += fattributes + char + "</font>";
+        }
+        return title;
+    }
+
+</script>
+
+
+</HEAD>
+
+<body onload = "init()">
+    <p id = "binary1"></p> 
+    <p id = "binary2"></p>
+    <div class = "container">
+    <h5 id="sucks"></h5>
+    </div>
+    <ul class="first"></ul>
+    <ul class="second"></ul>
+    <ul class="third"></ul>
+    <ul class="fourth"></ul>
+    <ul class="fifth"></ul>
+    <ul class="sixth"></ul>
+    <ul class="seventh"></ul>
+    <ul class="eighth"></ul>
+</body>
+</HTML>
